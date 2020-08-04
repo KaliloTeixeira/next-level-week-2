@@ -13,19 +13,15 @@
     --color-text-in-primary: #D4C2FF;
     --color-text-title: #32264D;
     --color-text-complement: #9C98A6;
-    --color-text-base: #6A6180;
+    --color-text-base: #D4C2FF;
     --color-line-in-white: #E6E6F0;
     --color-input-background: #F8F8FC;
     --color-button-text: #FFFFFF;
     --color-box-base: #FFFFFF;
     --color-box-footer: #FAFAFC;
     --color-small-info: #C1BCCC;
-
-    /*Tamanho da Fonte Padrão*/
-    /* 16px - 100% - 1rem */
-    /*rem - Tamanho relativo ao setado no root*/
-    /*em - Tamanho relativo ao elemento pai*/
-    font-size: 60%;    
+    
+    font-size: 60%;
 }
 
 * {
@@ -60,4 +56,10 @@ textarea {
 #container {
     width: 90vw;
     max-width: 700px;
+}
+
+@media (min-width: 700px){
+    :root {
+        font-size: 62.5%;
+    }
 }
