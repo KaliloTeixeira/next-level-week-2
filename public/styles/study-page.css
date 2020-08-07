@@ -133,6 +133,13 @@
     background-color: var(--color-secondary-dark);
 }
 
+#page-study main .no-results{
+    max-width: 30rem;
+    margin: 12rem auto;
+    text-align: center;
+    font: 1.8rem Archivo;
+    color: var(--color-primary-darker);
+}
 
 @media(min-width:700px) {
     #page-study #container {

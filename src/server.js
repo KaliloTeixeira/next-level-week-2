@@ -1,30 +1,7 @@
-const subjects = [
-    "Artes",
-    "Biologia",
-    "Ciências",
-    "Educação Física",
-    "Física",
-    "Geografia",
-    "História",
-    "Matemática",
-    "Português",
-    "Química"
-]
-
-const weekdays = [
-    "Domingo",
-    "Segunda-feira",
-    "Terça-feira",
-    "Quarta-feira",
-    "Quinta-feira",
-    "Sexta-feira",
-    "Sábado"
-]
-
 const express = require('express')
 const nunjucks = require('nunjucks')
 const server = express();
-
+const { pageLanding, studyPage, giveClassesPage, saveClasses } = require('./pages.js')
 
 //configuração do nunjucks
 nunjucks.configure('src/pages', {
@@ -33,51 +10,18 @@ nunjucks.configure('src/pages', {
 })
 
 //Configuração dos arquivos estáticos
-server
-.use(express.static("public"))
+server.use(express.static("public"))
+
+//receber os dados do req.body
+server.use(express.urlencoded({ extended: true }))
 
 //Configuração das ROTAS
 server
 .get("/", pageLanding)
 .get("/study", studyPage)
 .get("/give-classes", giveClassesPage)
-.listen(5500)
+.post("/save-classes", saveClasses)
 
-//Funcionalidades das Páginas
-function pageLanding(req, res) {
-    return res.render("home-page.html");
-}
+// start do server
+server.listen(5500)
 
-function studyPage(req, res) {
-    const filters = req.query;
-    console.log(filters)
-
-
-    return res.render("study-page.html", { proffys, filters, subjects, weekdays });
-}
-
-function giveClassesPage(req, res) {
-    //Receber dados do Formulário e adicionar aos Proffys
-    const data = req.query
-    const isNotEmpty = Object.keys(data).length != 0
-    
-    //Se o array do form não estiver vazio, ele cadastra o Prof e redireciona para a página study
-    if(isNotEmpty){
-        //Alterando o subject de numero para nome usando a funcao
-        data.subject = getSubject(data.subject)
-
-        //Adicionando dados no Array de Proffys
-        proffys.push(data)
-
-        return res.redirect("/study")
-    }
-
-    return res.render("give-classes-page.html", { subjects, weekdays });
-}
-
-//Funcionalidades Gerais
-
-//Função que recebe o número do subject no form e retorna o nome da matéria
-function getSubject(subjectNumber){ 
-    return subjects[+subjectNumber-1]
-}
